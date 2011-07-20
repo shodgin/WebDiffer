@@ -1,0 +1,9 @@
+- id:   google
+  type: webpage
+  url:  http://www.google.com
+  mail: [scotthodgin@gmail.comm]
+
+- id:   yahoo 
+  type: webpage
+  url:  http://www.yahoo.com
+  mail: [scotthodgin@gmail.comm]

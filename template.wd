@@ -1,0 +1,110 @@
+# Basic rules for setting up a .wd config file
+#
+# 1. A .wd file may contain settings for as many web pages
+#    or other content as desired.
+#
+# 2. Options/Fields for a given piece of content must be grouped
+#    in sequential order.
+#
+# 3. The first option of a given piece of content must start with
+#    a dash "-" and a space.  It is recommended but not required
+#    that the first option given for an item is its "id".
+#
+# 4. All subsequent options must be indented to the same indentation
+#    level as the first option in the group.  The indentation for the 
+#    first option starts with the option name and not its preceding dash.
+#    Be careful about mixing tabs and spacing, as they are interpreted
+#    differently.  It common to use 2 spaces for indentation and 
+#    recommended that tabs not be used.
+#
+# 5. Option names are to be followed by a colon ":", a space, and the 
+#    value for the option.  It is permitted to have multiple white space 
+#    characters between the colon and the value.  Additional space are
+#    commonly put in to align all values on the same column, making the 
+#    file more readable.
+#
+# 6. Some options support multiple entries.  When listing multiple items
+#    use the from: [item1, item2, item3, ...itemN].  When a single item
+#    is to used on a field that supports multiple items, the single item
+#    will need to be placed in brackets like this: [item].  Currently the 
+#    only two options that support multiple items are "mail" and "rule".
+#
+# 7. To prevent a *.wd file from being loaded when webdiffer runs, rename
+#    the file with a different file extension.  The standard practice is to
+#    change the file extension from ".wd" to ".wd_".
+#
+#
+# Required Fields
+#
+# id -- The "id" field is used to give each content item a unique name.  The id
+#       is used internally for variable names, as well as externally in the 
+#       names of supporting log files.  This will also be the name used in messages
+#       to notify users of a change in content.  Typically the "id" field will be
+#       the first option listed in a content block, and thus should be preceded
+#       by a dash "-" and a space:
+#           - id: google
+#       Id names should be made up of only alpha numeric characters and underscores.
+#       No spaces or dashes should appear in the name.
+#
+# type -- This field represents the type of content to be monitored.  Currently
+#         only web page monitoring is supported:
+#             type: webpage
+#
+# url -- This option will contain the url/link to the content to be monitored.
+#        It is important that the full url is used, i.e. "http://", "https://", 
+#        or "ftp://" should be included:
+#            url: http://www.google.com
+#
+# mail -- This option contains a list of e-mail addresses that are to be notified
+#         when the content has changed.  The e-mail addresses should be contained 
+#         in a set of brackets "[]" and separated by commas:
+#             mail: [steve@gmail.com, charles@yahoo.com, travis@hotmail.com]
+#         If there is only one e-mail address, it should still be enclosed in brackets:
+#             mail: [scott@gmail.com]
+#
+#
+# Optional Fields
+#
+# rule -- Some web pages have dynamic content, which can change on a frequent basis.
+#         If the changes are unimportant and the user would like to ignore them, a 
+#         "rule" will have to be created.  The rule will be a list of "regular 
+#         expressions" enclosed in single quotes and separated by commas:
+#             rule: ['regex1', 'regex2', 'regex3']
+#         The regular expressions should represent the block of HTML code that is
+#         to be ignored.  Setting up these rules will require basic knowledge of
+#         HTML and regular expressions, the following links may be helpful:
+#             http://www.w3schools.com/html/html_intro.asp
+#             http://www.regular-expressions.info/tutorial.html
+#
+# user -- When using basic web authentication the "user" option is added to 
+#         specify the user name to be entered when logging into the web page:
+#             user: user_name
+#         Some times a web page only requires a password and the user name is not 
+#         used.  In this case the user option should still be used, but the no name
+#         will be specified at the end of the option:
+#             user: 
+#
+# pass -- When using basic web authentication the "pass" option is added to 
+#         specify the password to be entered when logging into the web page:
+#             pass: password
+#
+#
+# EXAMPLES
+
+- id:   google
+  type: webpage
+  url:  http://www.google.com
+  mail: [scott.hodgin@libtax.com]
+  rule: ['<script>[^<]*</script>']
+
+- id: yahoo
+  type: webpage
+  url: http://www.yahoo.com
+  mail: [scott.hodgin@libtax.com, scotthodgin@gmail.com] 
+
+- id:   MS_New
+  type: webpage
+  user: liber
+  pass: liber246
+  url:  https://www.mstc.state.ms.us/nactp/news/main.htm
+  mail: [scott.hodgin@libtax.com, scotthodgin@gmail.com]
